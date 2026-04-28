@@ -67,21 +67,25 @@ export default async function ProductDetailPage({ params }: Props) {
                   {product.category}
                 </span>
               </div>
-              <div className="absolute right-4 top-4">
-                <span className="flex items-center gap-1 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon points="6,4 20,12 6,20" />
-                  </svg>
-                  {product.duration}
-                </span>
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 shadow-2xl transition hover:scale-105">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-900">
-                    <polygon points="6,4 20,12 6,20" />
-                  </svg>
-                </button>
-              </div>
+              {product.duration && (
+                <div className="absolute right-4 top-4">
+                  <span className="flex items-center gap-1 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="6,4 20,12 6,20" />
+                    </svg>
+                    {product.duration}
+                  </span>
+                </div>
+              )}
+              {product.duration && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <button className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 shadow-2xl transition hover:scale-105">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-900">
+                      <polygon points="6,4 20,12 6,20" />
+                    </svg>
+                  </button>
+                </div>
+              )}
             </div>
 
             <h1 className="mt-8 text-3xl font-bold tracking-tight md:text-4xl">

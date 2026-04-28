@@ -23,20 +23,33 @@ export function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
         <div className="absolute right-3 top-3">
-          <span className="flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="6,4 20,12 6,20" />
-            </svg>
-            {product.duration}
-          </span>
+          {product.duration ? (
+            <span className="flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="6,4 20,12 6,20" />
+              </svg>
+              {product.duration}
+            </span>
+          ) : (
+            <span className="flex items-center gap-1 rounded-full bg-white/95 px-2 py-0.5 text-xs font-medium text-zinc-700 shadow-sm">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+              사진 {product.galleryUrls.length + 1}
+            </span>
+          )}
         </div>
-        <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition group-hover:bg-black/10 group-hover:opacity-100">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 shadow-lg">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-900">
-              <polygon points="6,4 20,12 6,20" />
-            </svg>
-          </span>
-        </div>
+        {product.duration && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition group-hover:bg-black/10 group-hover:opacity-100">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 shadow-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-900">
+                <polygon points="6,4 20,12 6,20" />
+              </svg>
+            </span>
+          </div>
+        )}
       </div>
       <div className="flex flex-1 flex-col p-5">
         <h3 className="font-semibold tracking-tight text-zinc-900">{product.title}</h3>

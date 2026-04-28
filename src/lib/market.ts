@@ -25,13 +25,15 @@ export type Product = {
   title: string;
   priceFrom: number;
   priceTo: number;
-  duration: string;
+  duration?: string;
   imageUrl: string;
   galleryUrls: string[];
   description: string;
   highlights: string[];
   reviews: Review[];
 };
+
+export const hasVideo = (p: Product) => Boolean(p.duration);
 
 const unsplash = (id: string, w = 1200, q = 75) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=${q}&auto=format&fit=crop`;
@@ -217,7 +219,6 @@ export const products: Product[] = [
     title: "주방 싱크대 실리콘 시공",
     priceFrom: 60000,
     priceTo: 90000,
-    duration: "06:42",
     imageUrl: unsplash("1556909114-f6e7ad7d3136"),
     galleryUrls: [
       unsplash("1503387762-592deb58ef4e"),
@@ -324,7 +325,6 @@ export const products: Product[] = [
     title: "에어컨 분해 청소 (벽걸이)",
     priceFrom: 90000,
     priceTo: 130000,
-    duration: "18:40",
     imageUrl: unsplash("1565182999561-18d7dc61c393"),
     galleryUrls: [
       unsplash("1626806787461-102c1bfaaea1"),
@@ -354,7 +354,6 @@ export const products: Product[] = [
     title: "거실 실크벽지 부분 시공",
     priceFrom: 480000,
     priceTo: 680000,
-    duration: "36:15",
     imageUrl: unsplash("1611348586804-61bf6c080437"),
     galleryUrls: [
       unsplash("1618220179428-22790b461013"),
