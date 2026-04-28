@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -51,9 +52,16 @@ export default async function ProductDetailPage({ params }: Props) {
 
         <section className="mx-auto grid max-w-6xl gap-10 px-6 py-10 lg:grid-cols-[1.4fr_1fr]">
           <div>
-            <div
-              className={`relative aspect-video overflow-hidden rounded-3xl bg-gradient-to-br ${product.thumbnailTone}`}
-            >
+            <div className="relative aspect-video overflow-hidden rounded-3xl bg-zinc-100">
+              <Image
+                src={product.imageUrl}
+                alt={product.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 60vw"
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/15" />
               <div className="absolute left-4 top-4">
                 <span className="rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm">
                   {product.category}
@@ -122,17 +130,24 @@ export default async function ProductDetailPage({ params }: Props) {
               <p className="mt-3 leading-relaxed text-zinc-700">{product.description}</p>
             </div>
 
-            {product.galleryTones.length > 0 && (
+            {product.galleryUrls.length > 0 && (
               <div className="mt-10">
                 <h2 className="text-xl font-bold tracking-tight">이전 작업 갤러리</h2>
                 <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-                  {product.galleryTones.map((tone, i) => (
+                  {product.galleryUrls.map((url, i) => (
                     <div
                       key={i}
-                      className={`relative aspect-square overflow-hidden rounded-2xl bg-gradient-to-br ${tone}`}
+                      className="group relative aspect-square overflow-hidden rounded-2xl bg-zinc-100"
                     >
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition hover:opacity-100">
-                        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90">
+                      <Image
+                        src={url}
+                        alt={`${product.title} 작업 사례 ${i + 1}`}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-cover transition duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition group-hover:bg-black/20 group-hover:opacity-100">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/95">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-900">
                             <polygon points="6,4 20,12 6,20" />
                           </svg>

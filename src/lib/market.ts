@@ -26,12 +26,15 @@ export type Product = {
   priceFrom: number;
   priceTo: number;
   duration: string;
-  thumbnailTone: string;
+  imageUrl: string;
+  galleryUrls: string[];
   description: string;
   highlights: string[];
-  galleryTones: string[];
   reviews: Review[];
 };
+
+const unsplash = (id: string, w = 1200, q = 75) =>
+  `https://images.unsplash.com/photo-${id}?w=${w}&q=${q}&auto=format&fit=crop`;
 
 export const workers: Record<string, Worker> = {
   "w-001": {
@@ -85,19 +88,19 @@ export const products: Product[] = [
     priceFrom: 120000,
     priceTo: 180000,
     duration: "12:34",
-    thumbnailTone: "from-zinc-100 to-zinc-200",
+    imageUrl: unsplash("1552321554-5fefe8c9ef14"),
+    galleryUrls: [
+      unsplash("1564540583246-934409427776"),
+      unsplash("1620626011761-996317b8d101"),
+      unsplash("1556910103-1c02745aae4d"),
+      unsplash("1605276374104-dee2a0ed3cd6"),
+    ],
     description:
       "기존 실리콘을 완전히 제거하고 곰팡이 처리 후 프리미엄 실리콘으로 재시공합니다. 욕조·세면대·바닥 코너까지 전부 포함.",
     highlights: [
       "기존 실리콘 100% 제거 후 시공",
       "곰팡이 방지제 사전 처리",
       "전 과정 영상 기록 + 1년 A/S",
-    ],
-    galleryTones: [
-      "from-zinc-100 to-zinc-300",
-      "from-zinc-50 to-zinc-200",
-      "from-zinc-200 to-zinc-100",
-      "from-zinc-100 to-zinc-200",
     ],
     reviews: [
       {
@@ -131,18 +134,18 @@ export const products: Product[] = [
     priceFrom: 180000,
     priceTo: 260000,
     duration: "08:12",
-    thumbnailTone: "from-sky-50 to-zinc-100",
+    imageUrl: unsplash("1626806787461-102c1bfaaea1"),
+    galleryUrls: [
+      unsplash("1565182999561-18d7dc61c393"),
+      unsplash("1574691250077-03a929faece5"),
+      unsplash("1502672023488-70e25813eb80"),
+    ],
     description:
       "신규 벽걸이 에어컨 설치 및 배관 작업. 외부 배관 트림 마감까지 깔끔하게 처리합니다.",
     highlights: [
       "배관 길이 5m 기본 포함",
       "벽 천공 + 외부 마감 트림",
       "시운전 영상 + 누설 점검 보고서",
-    ],
-    galleryTones: [
-      "from-sky-100 to-zinc-100",
-      "from-sky-50 to-zinc-200",
-      "from-zinc-100 to-sky-50",
     ],
     reviews: [
       {
@@ -169,19 +172,19 @@ export const products: Product[] = [
     priceFrom: 320000,
     priceTo: 420000,
     duration: "24:50",
-    thumbnailTone: "from-amber-50 to-zinc-100",
+    imageUrl: unsplash("1618220179428-22790b461013"),
+    galleryUrls: [
+      unsplash("1611348586804-61bf6c080437"),
+      unsplash("1600585154340-be6161a56a0c"),
+      unsplash("1567538096630-e0c55bd6374c"),
+      unsplash("1493663284031-b7e3aefcae8e"),
+    ],
     description:
       "원룸 전체 벽지 풀시공. 기존 벽지 제거, 면 정리, 합지 도배까지. 도배지 4종 선택 가능.",
     highlights: [
       "기존 벽지 제거 + 면 보수 포함",
       "합지 4종 중 선택",
       "이사 일정 맞춤 시공 가능",
-    ],
-    galleryTones: [
-      "from-amber-100 to-zinc-100",
-      "from-zinc-100 to-amber-50",
-      "from-amber-50 to-zinc-200",
-      "from-zinc-50 to-amber-100",
     ],
     reviews: [
       {
@@ -215,7 +218,11 @@ export const products: Product[] = [
     priceFrom: 60000,
     priceTo: 90000,
     duration: "06:42",
-    thumbnailTone: "from-zinc-100 to-zinc-200",
+    imageUrl: unsplash("1556909114-f6e7ad7d3136"),
+    galleryUrls: [
+      unsplash("1503387762-592deb58ef4e"),
+      unsplash("1560448204-e02f11c3d0e2"),
+    ],
     description:
       "싱크대 코너·후드 주변 실리콘 부분 시공. 작은 작업도 영상 기록 포함.",
     highlights: [
@@ -223,7 +230,6 @@ export const products: Product[] = [
       "1년 A/S 보장",
       "당일 시공 가능 (서울권)",
     ],
-    galleryTones: ["from-zinc-100 to-zinc-200", "from-zinc-50 to-zinc-100"],
     reviews: [
       {
         id: "r-009",
@@ -242,19 +248,19 @@ export const products: Product[] = [
     priceFrom: 1800000,
     priceTo: 2800000,
     duration: "1:08:22",
-    thumbnailTone: "from-emerald-50 to-zinc-100",
+    imageUrl: unsplash("1586023492125-27b2c045efd7"),
+    galleryUrls: [
+      unsplash("1556228720-195a672e8a03"),
+      unsplash("1583847268964-b28dc8f51f92"),
+      unsplash("1542144582-1ba00456b5e3"),
+      unsplash("1622372738946-62e02505feb3"),
+    ],
     description:
       "원룸 단위 부분 인테리어. 도배 + 장판 + 조명 교체 + 줄눈/코킹 마감까지 패키지로.",
     highlights: [
       "도배·장판·조명 일괄 시공",
       "사전 3D 시뮬레이션 제공",
       "주차별 진행 영상 공유",
-    ],
-    galleryTones: [
-      "from-emerald-100 to-zinc-100",
-      "from-zinc-100 to-emerald-50",
-      "from-emerald-50 to-zinc-200",
-      "from-zinc-50 to-emerald-100",
     ],
     reviews: [
       {
@@ -281,18 +287,18 @@ export const products: Product[] = [
     priceFrom: 220000,
     priceTo: 380000,
     duration: "32:18",
-    thumbnailTone: "from-violet-50 to-zinc-100",
+    imageUrl: unsplash("1581578731548-c64695cc6952"),
+    galleryUrls: [
+      unsplash("1631889993959-41b4e9c6e3c5"),
+      unsplash("1505691938895-1758d7feb511"),
+      unsplash("1622372738946-62e02505feb3"),
+    ],
     description:
       "이사 직후 입주 전 풀 청소. 욕실·주방·창틀·새시·붙박이 내부까지.",
     highlights: [
       "전 영역 영상 기록",
       "재방문 1회 무료 (7일 이내)",
       "친환경 세제 사용",
-    ],
-    galleryTones: [
-      "from-violet-100 to-zinc-100",
-      "from-zinc-100 to-violet-50",
-      "from-violet-50 to-zinc-200",
     ],
     reviews: [
       {
@@ -319,7 +325,11 @@ export const products: Product[] = [
     priceFrom: 90000,
     priceTo: 130000,
     duration: "18:40",
-    thumbnailTone: "from-sky-50 to-zinc-100",
+    imageUrl: unsplash("1565182999561-18d7dc61c393"),
+    galleryUrls: [
+      unsplash("1626806787461-102c1bfaaea1"),
+      unsplash("1574691250077-03a929faece5"),
+    ],
     description:
       "벽걸이 에어컨 완전 분해 청소. 송풍팬·열교환기·필터까지 분리 후 고압 세척.",
     highlights: [
@@ -327,7 +337,6 @@ export const products: Product[] = [
       "곰팡이·세균 제거 + 향균 코팅",
       "전·후 송풍 비교 영상 제공",
     ],
-    galleryTones: ["from-sky-100 to-zinc-100", "from-sky-50 to-zinc-200"],
     reviews: [
       {
         id: "r-014",
@@ -346,18 +355,18 @@ export const products: Product[] = [
     priceFrom: 480000,
     priceTo: 680000,
     duration: "36:15",
-    thumbnailTone: "from-amber-50 to-zinc-100",
+    imageUrl: unsplash("1611348586804-61bf6c080437"),
+    galleryUrls: [
+      unsplash("1618220179428-22790b461013"),
+      unsplash("1600585154340-be6161a56a0c"),
+      unsplash("1567538096630-e0c55bd6374c"),
+    ],
     description:
       "거실 한 면 또는 전체 실크벽지 시공. 무늬 매칭과 모서리 마감까지 정밀하게.",
     highlights: [
       "실크 8종 샘플 사전 발송",
       "무늬 매칭 + 모서리 정밀 마감",
       "기존 벽지 보수 포함",
-    ],
-    galleryTones: [
-      "from-amber-100 to-zinc-100",
-      "from-zinc-50 to-amber-50",
-      "from-amber-50 to-zinc-200",
     ],
     reviews: [
       {

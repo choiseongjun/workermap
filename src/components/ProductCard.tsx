@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { type Product, getWorker, formatPriceRange } from "@/lib/market";
 
@@ -8,9 +9,14 @@ export function ProductCard({ product }: { product: Product }) {
       href={`/market/${product.id}`}
       className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white transition hover:-translate-y-0.5 hover:border-zinc-200 hover:shadow-md"
     >
-      <div
-        className={`relative aspect-[4/3] bg-gradient-to-br ${product.thumbnailTone}`}
-      >
+      <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
+        <Image
+          src={product.imageUrl}
+          alt={product.title}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition duration-300 group-hover:scale-105"
+        />
         <div className="absolute left-3 top-3">
           <span className="rounded-full bg-white/95 px-2 py-0.5 text-xs font-medium text-zinc-700 shadow-sm">
             {product.category}
@@ -24,8 +30,8 @@ export function ProductCard({ product }: { product: Product }) {
             {product.duration}
           </span>
         </div>
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition group-hover:bg-black/10 group-hover:opacity-100">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 shadow-lg">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-900">
               <polygon points="6,4 20,12 6,20" />
             </svg>

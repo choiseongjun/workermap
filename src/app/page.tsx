@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -60,24 +61,35 @@ function Hero() {
               <Link
                 href={`/market/${p.id}`}
                 key={p.id}
-                className={`group relative aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br ${p.thumbnailTone} p-5 text-left transition hover:-translate-y-1 hover:shadow-lg`}
+                className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-zinc-100 text-left transition hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-zinc-700">
-                    {p.category}
-                  </span>
-                  <span className="flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="6,4 20,12 6,20" />
-                    </svg>
-                    {p.duration}
-                  </span>
-                </div>
-                <div className="absolute inset-x-5 bottom-5">
-                  <h3 className="font-semibold text-zinc-900">{p.title}</h3>
-                  <p className="mt-1 text-sm text-zinc-600">
-                    {w?.name} · {formatPriceRange(p.priceFrom, p.priceTo)}
-                  </p>
+                <Image
+                  src={p.imageUrl}
+                  alt={p.title}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover transition duration-300 group-hover:scale-105"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                <div className="relative flex h-full flex-col justify-between p-5">
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-full bg-white/95 px-2 py-0.5 text-xs font-medium text-zinc-700">
+                      {p.category}
+                    </span>
+                    <span className="flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="6,4 20,12 6,20" />
+                      </svg>
+                      {p.duration}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-white">{p.title}</h3>
+                    <p className="mt-1 text-sm text-white/80">
+                      {w?.name} · {formatPriceRange(p.priceFrom, p.priceTo)}
+                    </p>
+                  </div>
                 </div>
               </Link>
             );
