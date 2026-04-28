@@ -3,10 +3,14 @@ export type Category = (typeof CATEGORIES)[number];
 
 export type Worker = {
   id: string;
+  handle: string;
   name: string;
   rating: number;
   totalJobs: number;
   region: string;
+  category: Category;
+  yearsActive: number;
+  verified: boolean;
   bio: string;
 };
 
@@ -41,42 +45,62 @@ const unsplash = (id: string, w = 1200, q = 75) =>
 export const workers: Record<string, Worker> = {
   "w-001": {
     id: "w-001",
+    handle: "jaehoon",
     name: "김재훈",
     rating: 4.9,
     totalJobs: 127,
     region: "서울 강남·송파",
+    category: "코킹",
+    yearsActive: 10,
+    verified: true,
     bio: "10년차 코킹·실리콘 전문. 매 작업 영상 기록으로 신뢰드립니다.",
   },
   "w-002": {
     id: "w-002",
+    handle: "minseok",
     name: "박민석",
     rating: 4.8,
     totalJobs: 84,
     region: "서울 마포·서대문",
+    category: "에어컨",
+    yearsActive: 7,
+    verified: true,
     bio: "에어컨 설치 7년. 깔끔한 배관 마감과 사후 점검까지.",
   },
   "w-003": {
     id: "w-003",
+    handle: "jiyeon",
     name: "이지연",
     rating: 4.9,
     totalJobs: 213,
     region: "경기 분당·판교",
+    category: "도배",
+    yearsActive: 14,
+    verified: true,
     bio: "도배·장판 전문 14년. 합지부터 실크까지 풀시공.",
   },
   "w-004": {
     id: "w-004",
+    handle: "seongho",
     name: "정성호",
     rating: 4.7,
     totalJobs: 56,
     region: "서울 강서·양천",
+    category: "인테리어",
+    yearsActive: 5,
+    verified: false,
     bio: "원룸·투룸 부분 인테리어 전문. 견적 명확하게 드립니다.",
   },
   "w-005": {
     id: "w-005",
+    handle: "eunyoung",
     name: "최은영",
     rating: 4.9,
     totalJobs: 178,
     region: "서울 노원·도봉",
+    category: "청소",
+    yearsActive: 8,
+    verified: true,
     bio: "입주청소 8년. 사진·영상 기록 + 재방문 무료.",
   },
 };
@@ -392,6 +416,20 @@ export function getProduct(id: string) {
 
 export function getWorker(id: string) {
   return workers[id];
+}
+
+export function getWorkerByHandle(handle: string) {
+  return Object.values(workers).find((w) => w.handle === handle);
+}
+
+export function getProductsByWorker(workerId: string) {
+  return products.filter((p) => p.workerId === workerId);
+}
+
+export function getReviewsByWorker(workerId: string) {
+  return getProductsByWorker(workerId).flatMap((p) =>
+    p.reviews.map((r) => ({ ...r, productId: p.id, productTitle: p.title }))
+  );
 }
 
 export function formatPriceRange(from: number, to: number) {

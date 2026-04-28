@@ -30,7 +30,7 @@ export function SiteHeader() {
             로그인
           </Link>
           <Link
-            href="#"
+            href="/become-worker"
             className="inline-flex h-9 items-center rounded-full bg-zinc-900 px-4 text-sm font-medium text-white transition hover:bg-zinc-800"
           >
             무료로 시작

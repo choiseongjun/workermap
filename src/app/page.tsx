@@ -42,7 +42,7 @@ function Hero() {
         </p>
         <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
-            href="#"
+            href="/become-worker"
             className="inline-flex h-12 items-center justify-center rounded-full bg-zinc-900 px-7 font-medium text-white transition hover:bg-zinc-800"
           >
             무료로 시작하기 →
@@ -443,7 +443,7 @@ function Pricing() {
                 ))}
               </ul>
               <Link
-                href="#"
+                href="/become-worker"
                 className={`mt-7 inline-flex h-11 items-center justify-center rounded-full font-medium transition ${
                   p.highlight
                     ? "bg-white text-zinc-900 hover:bg-zinc-100"
@@ -474,7 +474,7 @@ function FinalCTA() {
         </p>
         <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
-            href="#"
+            href="/become-worker"
             className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-zinc-950 transition hover:bg-zinc-100"
           >
             무료로 시작하기 →
