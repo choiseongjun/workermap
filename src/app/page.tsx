@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { products, getWorker, formatPriceRange } from "@/lib/market";
 
 export default function Home() {
   return (
@@ -17,90 +20,8 @@ export default function Home() {
   );
 }
 
-function Logo({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <path d="M9 12l2 2 4-4" />
-    </svg>
-  );
-}
-
-function SiteHeader() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-zinc-100 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 text-white">
-            <Logo />
-          </span>
-          <span className="text-lg font-bold tracking-tight">trustfolio</span>
-        </Link>
-        <nav className="hidden items-center gap-8 text-sm text-zinc-600 md:flex">
-          <a href="#how" className="transition hover:text-zinc-900">
-            서비스 소개
-          </a>
-          <a href="#workers" className="transition hover:text-zinc-900">
-            시공자
-          </a>
-          <a href="#cta" className="transition hover:text-zinc-900">
-            견적 요청
-          </a>
-        </nav>
-        <div className="flex items-center gap-2">
-          <Link
-            href="#"
-            className="hidden h-9 items-center px-4 text-sm text-zinc-700 transition hover:text-zinc-900 sm:inline-flex"
-          >
-            로그인
-          </Link>
-          <Link
-            href="#cta"
-            className="inline-flex h-9 items-center rounded-full bg-zinc-900 px-4 text-sm font-medium text-white transition hover:bg-zinc-800"
-          >
-            견적 받기
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
-
 function Hero() {
-  const portfolio = [
-    {
-      tag: "코킹",
-      title: "욕실 실리콘 재시공",
-      price: "150,000원",
-      duration: "12:34",
-      tone: "from-zinc-100 to-zinc-200",
-    },
-    {
-      tag: "에어컨",
-      title: "벽걸이 설치 + 배관",
-      price: "220,000원",
-      duration: "08:12",
-      tone: "from-emerald-50 to-zinc-100",
-    },
-    {
-      tag: "도배",
-      title: "원룸 합지 도배",
-      price: "380,000원",
-      duration: "24:50",
-      tone: "from-zinc-100 to-zinc-200",
-    },
-  ];
-
+  const featured = products.slice(0, 3);
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto max-w-6xl px-6 pt-20 pb-24 text-center md:pt-28 md:pb-32">
@@ -119,10 +40,10 @@ function Hero() {
         </p>
         <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
-            href="#cta"
+            href="/market"
             className="inline-flex h-12 items-center justify-center rounded-full bg-zinc-900 px-7 font-medium text-white transition hover:bg-zinc-800"
           >
-            무료 견적 받기 →
+            지금 둘러보기 →
           </Link>
           <Link
             href="#workers"
@@ -132,29 +53,35 @@ function Hero() {
           </Link>
         </div>
 
-        <div className="mt-20 grid max-w-4xl grid-cols-2 gap-4 mx-auto md:grid-cols-3">
-          {portfolio.map((it) => (
-            <div
-              key={it.title}
-              className={`relative aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br ${it.tone} p-5 text-left`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-zinc-700">
-                  {it.tag}
-                </span>
-                <span className="flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon points="6,4 20,12 6,20" />
-                  </svg>
-                  {it.duration}
-                </span>
-              </div>
-              <div className="absolute inset-x-5 bottom-5">
-                <h3 className="font-semibold text-zinc-900">{it.title}</h3>
-                <p className="mt-1 text-sm text-zinc-600">{it.price}</p>
-              </div>
-            </div>
-          ))}
+        <div className="mx-auto mt-20 grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-3">
+          {featured.map((p) => {
+            const w = getWorker(p.workerId);
+            return (
+              <Link
+                href={`/market/${p.id}`}
+                key={p.id}
+                className={`group relative aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br ${p.thumbnailTone} p-5 text-left transition hover:-translate-y-1 hover:shadow-lg`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-zinc-700">
+                    {p.category}
+                  </span>
+                  <span className="flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="6,4 20,12 6,20" />
+                    </svg>
+                    {p.duration}
+                  </span>
+                </div>
+                <div className="absolute inset-x-5 bottom-5">
+                  <h3 className="font-semibold text-zinc-900">{p.title}</h3>
+                  <p className="mt-1 text-sm text-zinc-600">
+                    {w?.name} · {formatPriceRange(p.priceFrom, p.priceTo)}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -345,7 +272,13 @@ function ForWorkers() {
               <div className="rounded-2xl bg-white p-4 shadow-lg">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-emerald-500">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="text-emerald-500"
+                    >
                       <polygon points="6,4 20,12 6,20" />
                     </svg>
                   </div>
@@ -375,10 +308,10 @@ function FinalCTA() {
         </p>
         <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
-            href="#"
+            href="/market"
             className="inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium text-zinc-950 transition hover:bg-zinc-100"
           >
-            지금 견적 요청 →
+            지금 둘러보기 →
           </Link>
           <Link
             href="#"
@@ -389,32 +322,5 @@ function FinalCTA() {
         </div>
       </div>
     </section>
-  );
-}
-
-function SiteFooter() {
-  return (
-    <footer className="border-t border-zinc-100">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-12 text-sm text-zinc-500 md:flex-row">
-        <div className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-zinc-900 text-white">
-            <Logo className="h-3 w-3" />
-          </span>
-          <span className="font-semibold text-zinc-900">trustfolio</span>
-          <span className="ml-2">© 2026</span>
-        </div>
-        <div className="flex gap-6">
-          <a href="#" className="transition hover:text-zinc-900">
-            이용약관
-          </a>
-          <a href="#" className="transition hover:text-zinc-900">
-            개인정보처리방침
-          </a>
-          <a href="#" className="transition hover:text-zinc-900">
-            문의
-          </a>
-        </div>
-      </div>
-    </footer>
   );
 }
