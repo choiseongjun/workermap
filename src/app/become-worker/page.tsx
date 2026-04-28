@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { BusinessCard } from "@/components/BusinessCard";
 import { CATEGORIES, type Category } from "@/lib/market";
 
 type Step = 1 | 2 | 3;
@@ -394,12 +395,19 @@ function Step3({ form, handle }: { form: FormState; handle: string }) {
     fullUrl
   )}&margin=10`;
 
-  // 데모용으로 기존 시공자 페이지 중 첫 번째로 이동
+  const yearsNum = parseInt(form.yearsActive, 10) || 0;
   const previewHref = `/w/jaehoon`;
+  const highlights = form.workDescription
+    ? [
+        `${form.workTitle} · ${formatPriceShort(form.workPriceFrom, form.workPriceTo)}`,
+        form.workDescription,
+        "전 작업 영상 기록 + 1년 A/S",
+      ]
+    : ["포트폴리오를 추가하고 영업을 시작하세요"];
 
   return (
     <div className="space-y-8">
-      <div className="rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-zinc-50 p-8 ring-1 ring-emerald-100 md:p-12">
+      <div className="rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-zinc-50 p-6 ring-1 ring-emerald-100 md:p-10">
         <div className="flex flex-col items-center text-center">
           <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -412,69 +420,73 @@ function Step3({ form, handle }: { form: FormState; handle: string }) {
             페이지가 만들어졌습니다.
           </h2>
           <p className="mt-4 text-zinc-600">
-            아래 주소를 명함·인스타·카톡에 뿌리시면 손님이 직접 옵니다.
+            아래 명함을 인쇄하거나 QR을 인스타·카톡에 뿌려보세요.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-[auto_1fr]">
-          <div className="flex flex-col items-center gap-3 rounded-2xl bg-white p-5 shadow-sm">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={qrUrl} alt={`${form.name} QR`} width={180} height={180} />
+        <div className="mx-auto mt-10 max-w-xl">
+          <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            앞면
+          </p>
+          <BusinessCard
+            name={form.name}
+            category={form.category}
+            region={form.region}
+            phone={form.phone}
+            handle={handle}
+            yearsActive={yearsNum}
+            verified
+          />
+          <p className="mb-3 mt-8 text-center text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            뒷면
+          </p>
+          <BusinessCard
+            side="back"
+            name={form.name}
+            category={form.category}
+            region={form.region}
+            handle={handle}
+            yearsActive={yearsNum}
+            bio={form.bio || `${form.category} 전문 ${yearsNum}년차. 영상 기록으로 신뢰드립니다.`}
+            highlights={highlights}
+            rating={4.9}
+            totalJobs={0}
+          />
+        </div>
+
+        <div className="mx-auto mt-10 max-w-xl">
+          <div className="grid gap-3 sm:grid-cols-2">
             <a
               href={qrUrl}
               download={`trustfolio-${handle}-qr.png`}
-              className="text-xs font-medium text-zinc-700 underline-offset-2 hover:underline"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-zinc-900 px-6 text-sm font-medium text-white transition hover:bg-zinc-800"
             >
-              QR 다운로드
+              ⬇ QR 코드 다운로드
+            </a>
+            <a
+              href="#"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-zinc-200 bg-white px-6 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+            >
+              🖨 명함 PDF 받기 (준비 중)
             </a>
           </div>
-
-          <div className="flex flex-col gap-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                내 페이지 주소
-              </p>
-              <p className="mt-1 break-all font-mono text-lg font-bold text-zinc-900">
-                {url}
-              </p>
-            </div>
-
-            <div className="rounded-2xl bg-white p-5 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                명함 미리보기
-              </p>
-              <div className="mt-3 flex items-center justify-between rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-700 p-5 text-white">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-emerald-300">
-                    {form.category}
-                  </p>
-                  <p className="mt-1.5 text-2xl font-bold tracking-tight">{form.name}</p>
-                  <p className="mt-0.5 text-xs text-zinc-300">{form.region}</p>
-                  <p className="mt-3 font-mono text-xs text-zinc-400">{url}</p>
-                </div>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
-                    fullUrl
-                  )}&margin=4`}
-                  alt=""
-                  width={80}
-                  height={80}
-                  className="rounded bg-white p-1.5"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
+          <div className="mt-6 rounded-2xl bg-white p-5 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+              내 페이지 주소
+            </p>
+            <p className="mt-1.5 break-all font-mono text-base font-bold text-zinc-900">
+              {url}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
               <Link
                 href={previewHref}
-                className="inline-flex h-11 items-center rounded-full bg-zinc-900 px-5 text-sm font-medium text-white transition hover:bg-zinc-800"
+                className="inline-flex h-10 items-center rounded-full bg-zinc-900 px-5 text-sm font-medium text-white transition hover:bg-zinc-800"
               >
                 내 페이지 보러가기 →
               </Link>
               <Link
                 href="/"
-                className="inline-flex h-11 items-center rounded-full border border-zinc-200 bg-white px-5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+                className="inline-flex h-10 items-center rounded-full border border-zinc-200 bg-white px-5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
               >
                 홈으로
               </Link>
@@ -510,6 +522,15 @@ function Step3({ form, handle }: { form: FormState; handle: string }) {
       </div>
     </div>
   );
+}
+
+function formatPriceShort(from: string, to: string) {
+  const f = parseInt(from, 10) || 0;
+  const t = parseInt(to, 10) || 0;
+  const fW = Math.round(f / 10000);
+  const tW = Math.round(t / 10000);
+  if (fW === tW) return `${fW}만원`;
+  return `${fW}~${tW}만원`;
 }
 
 function SectionTitle({ title, desc }: { title: string; desc: string }) {

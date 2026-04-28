@@ -235,6 +235,13 @@ export default async function WorkerPage({ params }: Props) {
               handle={worker.handle}
               name={worker.name}
               category={worker.category}
+              region={worker.region}
+              yearsActive={worker.yearsActive}
+              rating={worker.rating}
+              totalJobs={worker.totalJobs}
+              verified={worker.verified}
+              bio={worker.bio}
+              thumbnails={items.slice(0, 3).map((p) => p.imageUrl)}
             />
           </aside>
         </section>
