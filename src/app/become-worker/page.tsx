@@ -23,17 +23,18 @@ type FormState = {
 };
 
 const initial: FormState = {
-  name: "",
-  handle: "",
-  phone: "",
-  region: "",
+  name: "김재훈",
+  handle: "jaehoon",
+  phone: "010-1234-5678",
+  region: "서울 강남·송파",
   category: "코킹",
-  yearsActive: "",
-  bio: "",
-  workTitle: "",
-  workPriceFrom: "",
-  workPriceTo: "",
-  workDescription: "",
+  yearsActive: "10",
+  bio: "10년차 코킹·실리콘 전문. 매 작업 영상 기록으로 신뢰드립니다.",
+  workTitle: "욕실 실리콘 풀 재시공",
+  workPriceFrom: "120000",
+  workPriceTo: "180000",
+  workDescription:
+    "기존 실리콘을 완전히 제거하고 곰팡이 처리 후 프리미엄 실리콘으로 재시공. 욕조·세면대·바닥 코너까지 전부 포함.",
 };
 
 function suggestHandle(name: string) {
